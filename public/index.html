@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Mongolian Text to Speech | Gracewell</title>
+
+
+<style>
+
+/* =====================================================
+   GENERAL
+===================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #f4f6f8;
+
+    margin: 0;
+
+    padding: 30px;
+
+    color: #222;
+
+}
+
+
+/* =====================================================
+   MAIN CONTAINER
+===================================================== */
+
+.container {
+
+    max-width: 850px;
+
+    margin: 0 auto;
+
+    background: #ffffff;
+
+    padding: 30px;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 4px 15px rgba(0,0,0,0.12);
+
+}
+
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+h1 {
+
+    text-align: center;
+
+    margin-top: 0;
+
+    margin-bottom: 10px;
+
+    font-size: 30px;
+
+}
+
+
+/* =====================================================
+   SUBTITLE
+===================================================== */
+
+.subtitle {
+
+    text-align: center;
+
+    color: #666;
+
+    margin-bottom: 30px;
+
+    font-size: 15px;
+
+}
+
+
+/* =====================================================
+   LABELS
+===================================================== */
+
+label {
+
+    display: block;
+
+    margin-top: 20px;
+
+    margin-bottom: 8px;
+
+    font-weight: bold;
+
+}
+
+
+/* =====================================================
+   TEXT AREA
+===================================================== */
+
+textarea {
+
+    width: 100%;
+
+    height: 210px;
+
+    padding: 15px;
+
+    border: 2px solid #aaa;
+
+    border-radius: 10px;
+
+    font-size: 18px;
+
+    line-height: 1.6;
+
+    resize: vertical;
+
+    font-family: Arial, sans-serif;
+
+}
+
+
+textarea:focus {
+
+    outline: none;
+
+    border-color: #333;
+
+}
+
+
+/* =====================================================
+   SELECT BOXES
+===================================================== */
+
+select {
+
+    width: 100%;
+
+    padding: 13px;
+
+    border: 1px solid #aaa;
+
+    border-radius: 8px;
+
+    background: white;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+}
+
+
+select:focus {
+
+    outline: none;
+
+    border-color: #333;
+
+}
+
+
+/* =====================================================
+   SPEED
+===================================================== */
+
+.speed-container {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+}
+
+
+input[type="range"] {
+
+    flex: 1;
+
+    cursor: pointer;
+
+}
+
+
+#speedValue {
+
+    width: 50px;
+
+    font-weight: bold;
+
+    text-align: center;
+
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.button-row {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+}
+
+
+button {
+
+    padding: 13px 20px;
+
+    margin-top: 20px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+
+button:hover {
+
+    opacity: 0.85;
+
+}
+
+
+button:disabled {
+
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+}
+
+
+/* Generate */
+
+.generate {
+
+    background: #111;
+
+    color: white;
+
+}
+
+
+/* Download */
+
+.download {
+
+    background: #ddd;
+
+    color: #111;
+
+}
+
+
+/* Stop */
+
+.stop {
+
+    background: #ddd;
+
+    color: #111;
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status {
+
+    margin-top: 20px;
+
+    padding: 15px;
+
+    border-radius: 8px;
+
+    line-height: 1.5;
+
+    word-break: break-word;
+
+}
+
+
+.status.info {
+
+    background: #e3f2fd;
+
+    color: #0d47a1;
+
+}
+
+
+.status.success {
+
+    background: #e8f5e9;
+
+    color: #1b5e20;
+
+}
+
+
+.status.error {
+
+    background: #ffebee;
+
+    color: #b71c1c;
+
+}
+
+
+/* =====================================================
+   AUDIO PLAYER
+===================================================== */
+
+audio {
+
+    width: 100%;
+
+    margin-top: 20px;
+
+}
+
+
+/* =====================================================
+   SELECTED SETTINGS BOX
+===================================================== */
+
+.settings-box {
+
+    margin-top: 20px;
+
+    padding: 15px;
+
+    background: #f5f5f5;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    line-height: 1.8;
+
+}
+
+
+.settings-box strong {
+
+    color: #222;
+
+}
+
+
+/* =====================================================
+   AI NOTICE
+===================================================== */
+
+.ai-note {
+
+    margin-top: 20px;
+
+    padding: 15px;
+
+    background: #fff8dc;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+
+    max-width: 850px;
+
+    margin: 25px auto 0;
+
+    padding: 20px;
+
+    text-align: center;
+
+    border-top: 1px solid #ddd;
+
+    color: #555;
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+}
+
+
+footer a {
+
+    color: inherit;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+}
+
+
+footer a:hover {
+
+    text-decoration: underline;
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    body {
+
+        padding: 10px;
+
+    }
+
+
+    .container {
+
+        padding: 20px;
+
+    }
+
+
+    h1 {
+
+        font-size: 24px;
+
+    }
+
+
+    .button-row {
+
+        flex-direction: column;
+
+    }
+
+
+    button {
+
+        width: 100%;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- ===================================================
+     MAIN CONTAINER
+=================================================== -->
+
+<div class="container">
+
+
+    <!-- TITLE -->
+
+    <h1>
+
+        🇲🇳 Mongolian Text to Speech
+
+    </h1>
+
+
+    <div class="subtitle">
+
+        AI-powered Mongolian speech research and analysis
+
+    </div>
+
+
+
+    <!-- =================================================
+         TEXT INPUT
+    ================================================== -->
+
+    <label for="text">
+
+        Mongolian Text
+
+    </label>
+
+
+    <textarea
+        id="text"
+        placeholder="Монгол хэлээр текстээ энд оруулна уу..."
+    >Сайн байна уу?
+
+Энэ бол Монгол хэл дээрх текстийг хиймэл оюун ашиглан дуу болгон хувиргах туршилт юм.
+
+Та Монгол хэлээр хүссэн текстээ энд бичиж болно.</textarea>
+
+
+
+    <!-- =================================================
+         OPENAI VOICE
+    ================================================== -->
+
+    <label for="voice">
+
+        OpenAI Voice
+
+    </label>
+
+
+    <select id="voice">
+
+        <option value="marin">
+
+            Marin
+
+        </option>
+
+
+        <option value="cedar">
+
+            Cedar
+
+        </option>
+
+
+        <option value="coral">
+
+            Coral
+
+        </option>
+
+
+        <option value="alloy">
+
+            Alloy
+
+        </option>
+
+
+        <option value="ash">
+
+            Ash
+
+        </option>
+
+
+        <option value="ballad">
+
+            Ballad
+
+        </option>
+
+
+        <option value="echo">
+
+            Echo
+
+        </option>
+
+
+        <option value="fable">
+
+            Fable
+
+        </option>
+
+
+        <option value="nova">
+
+            Nova
+
+        </option>
+
+
+        <option value="onyx">
+
+            Onyx
+
+        </option>
+
+
+        <option value="sage">
+
+            Sage
+
+        </option>
+
+
+        <option value="shimmer">
+
+            Shimmer
+
+        </option>
+
+    </select>
+
+
+
+    <!-- =================================================
+         MONGOLIAN VARIANT
+    ================================================== -->
+
+    <label for="variant">
+
+        🇲🇳 Mongolian Speaking Variant
+
+    </label>
+
+
+    <select id="variant">
+
+
+        <option value="standard">
+
+            Standard Mongolian
+
+        </option>
+
+
+        <option value="conversational">
+
+            Natural Conversational Mongolian
+
+        </option>
+
+
+        <option value="ub">
+
+            Contemporary Ulaanbaatar Style (Experimental)
+
+        </option>
+
+
+        <option value="formal">
+
+            Formal Mongolian
+
+        </option>
+
+
+        <option value="news">
+
+            News / Public Information
+
+        </option>
+
+
+        <option value="warm">
+
+            Warm &amp; Friendly
+
+        </option>
+
+
+        <option value="storytelling">
+
+            Storytelling
+
+        </option>
+
+
+        <option value="educational">
+
+            Educational / Teaching
+
+        </option>
+
+
+    </select>
+
+
+
+    <!-- =================================================
+         SPEED
+    ================================================== -->
+
+    <label for="speed">
+
+        Speech Speed
+
+    </label>
+
+
+    <div class="speed-container">
+
+
+        <input
+            type="range"
+            id="speed"
+            min="0.25"
+            max="2"
+            value="1"
+            step="0.05"
+        >
+
+
+        <span id="speedValue">
+
+            1.00
+
+        </span>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         BUTTONS
+    ================================================== -->
+
+    <div class="button-row">
+
+
+        <button
+            class="generate"
+            id="generateBtn"
+            onclick="generateSpeech()"
+        >
+
+            🔊 Generate Speech
+
+        </button>
+
+
+        <button
+            class="download"
+            id="downloadBtn"
+            onclick="downloadAudio()"
+            disabled
+        >
+
+            ⬇ Download MP3
+
+        </button>
+
+
+        <button
+            class="stop"
+            onclick="stopAudio()"
+        >
+
+            ■ Stop
+
+        </button>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         STATUS
+    ================================================== -->
+
+    <div
+        id="status"
+        class="status info"
+    >
+
+        Ready.
+
+    </div>
+
+
+
+    <!-- =================================================
+         AUDIO PLAYER
+    ================================================== -->
+
+    <audio
+        id="audioPlayer"
+        controls
+    >
+
+        Your browser does not support audio playback.
+
+    </audio>
+
+
+
+    <!-- =================================================
+         SETTINGS
+    ================================================== -->
+
+    <div class="settings-box">
+
+
+        <strong>
+
+            Selected Voice:
+
+        </strong>
+
+
+        <span id="voiceDisplay">
+
+            Marin
+
+        </span>
+
+
+        <br>
+
+
+        <strong>
+
+            Mongolian Variant:
+
+        </strong>
+
+
+        <span id="variantDisplay">
+
+            Standard Mongolian
+
+        </span>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         AI NOTICE
+    ================================================== -->
+
+    <div class="ai-note">
+
+
+        <strong>
+
+            AI Voice Notice:
+
+        </strong>
+
+
+        This speech is generated using artificial
+        intelligence.
+
+
+        The Mongolian speaking variants are experimental
+        pronunciation and delivery styles.
+
+
+        They should not be interpreted as recordings
+        of actual regional speakers.
+
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+
+    <strong>
+
+        Research and Analysis by
+
+        <a
+            href="https://www.gracewell.in"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+
+            Gracewell
+
+        </a>
+
+    </strong>
+
+
+    <br>
+
+
+    <span>
+
+        Mongolian Text-to-Speech Research Project
+
+    </span>
+
+
+</footer>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+// =====================================================
+// GLOBAL VARIABLES
+// =====================================================
+
+let audioBlob = null;
+
+let audioURL = null;
+
+
+
+// =====================================================
+// SPEED DISPLAY
+// =====================================================
+
+document
+    .getElementById("speed")
+    .addEventListener("input", function () {
+
+
+        document
+            .getElementById("speedValue")
+            .textContent =
+                Number(this.value).toFixed(2);
+
+
+    });
+
+
+
+// =====================================================
+// VARIANT DISPLAY
+// =====================================================
+
+document
+    .getElementById("variant")
+    .addEventListener("change", function () {
+
+
+        const selectedText =
+            this.options[
+                this.selectedIndex
+            ].text;
+
+
+        document
+            .getElementById("variantDisplay")
+            .textContent =
+                selectedText;
+
+
+    });
+
+
+
+// =====================================================
+// VOICE DISPLAY
+// =====================================================
+
+document
+    .getElementById("voice")
+    .addEventListener("change", function () {
+
+
+        const selectedText =
+            this.options[
+                this.selectedIndex
+            ].text;
+
+
+        document
+            .getElementById("voiceDisplay")
+            .textContent =
+                selectedText;
+
+
+    });
+
+
+
+// =====================================================
+// GENERATE SPEECH
+// =====================================================
+
+async function generateSpeech() {
+
+
+    // -------------------------------------------------
+    // GET TEXT
+    // -------------------------------------------------
+
+    const text =
+        document
+            .getElementById("text")
+            .value
+            .trim();
+
+
+    // -------------------------------------------------
+    // GET VOICE
+    // -------------------------------------------------
+
+    const voice =
+        document
+            .getElementById("voice")
+            .value;
+
+
+    // -------------------------------------------------
+    // GET VARIANT
+    // -------------------------------------------------
+
+    const variant =
+        document
+            .getElementById("variant")
+            .value;
+
+
+    // -------------------------------------------------
+    // GET SPEED
+    // -------------------------------------------------
+
+    const speed =
+        Number(
+            document
+                .getElementById("speed")
+                .value
+        );
+
+
+    // -------------------------------------------------
+    // ELEMENTS
+    // -------------------------------------------------
+
+    const status =
+        document
+            .getElementById("status");
+
+
+    const generateBtn =
+        document
+            .getElementById("generateBtn");
+
+
+    const downloadBtn =
+        document
+            .getElementById("downloadBtn");
+
+
+    const player =
+        document
+            .getElementById("audioPlayer");
+
+
+
+    // -------------------------------------------------
+    // VALIDATE
+    // -------------------------------------------------
+
+    if (!text) {
+
+
+        status.className =
+            "status error";
+
+
+        status.textContent =
+            "❌ Please enter Mongolian text.";
+
+
+        return;
+
+    }
+
+
+
+    // -------------------------------------------------
+    // DISABLE BUTTONS
+    // -------------------------------------------------
+
+    generateBtn.disabled = true;
+
+    downloadBtn.disabled = true;
+
+
+
+    // -------------------------------------------------
+    // STATUS
+    // -------------------------------------------------
+
+    status.className =
+        "status info";
+
+
+    status.textContent =
+        "⏳ Generating Mongolian speech...";
+
+
+
+    try {
+
+
+        // =============================================
+        // SEND REQUEST TO NODE SERVER
+        // =============================================
+
+        const response =
+            await fetch(
+
+                "/api/tts",
+
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body: JSON.stringify({
+
+                        text: text,
+
+                        voice: voice,
+
+                        speed: speed,
+
+                        variant: variant
+
+                    })
+
+                }
+
+            );
+
+
+
+        // =============================================
+        // CHECK RESPONSE
+        // =============================================
+
+        if (!response.ok) {
+
+
+            let errorMessage =
+                "Unknown server error";
+
+
+            try {
+
+
+                const data =
+                    await response.json();
+
+
+                errorMessage =
+                    data.error ||
+                    errorMessage;
+
+
+            }
+
+            catch {
+
+
+                errorMessage =
+                    await response.text();
+
+            }
+
+
+            throw new Error(
+                errorMessage
+            );
+
+        }
+
+
+
+        // =============================================
+        // RECEIVE AUDIO
+        // =============================================
+
+        const arrayBuffer =
+            await response.arrayBuffer();
+
+
+
+        if (!arrayBuffer.byteLength) {
+
+
+            throw new Error(
+                "The server returned an empty audio file."
+            );
+
+        }
+
+
+
+        // =============================================
+        // CREATE AUDIO BLOB
+        // =============================================
+
+        audioBlob =
+            new Blob(
+
+                [arrayBuffer],
+
+                {
+
+                    type: "audio/mpeg"
+
+                }
+
+            );
+
+
+
+        // =============================================
+        // REMOVE OLD URL
+        // =============================================
+
+        if (audioURL) {
+
+
+            URL.revokeObjectURL(
+                audioURL
+            );
+
+        }
+
+
+
+        // =============================================
+        // CREATE NEW URL
+        // =============================================
+
+        audioURL =
+            URL.createObjectURL(
+                audioBlob
+            );
+
+
+
+        // =============================================
+        // LOAD AUDIO
+        // =============================================
+
+        player.pause();
+
+        player.src =
+            audioURL;
+
+        player.load();
+
+
+
+        // =============================================
+        // ENABLE DOWNLOAD
+        // =============================================
+
+        downloadBtn.disabled = false;
+
+
+
+        // =============================================
+        // SUCCESS MESSAGE
+        // =============================================
+
+        status.className =
+            "status success";
+
+
+        status.innerHTML =
+            "✅ Speech generated successfully.<br>" +
+            "▶ Click Play below to listen.";
+
+
+
+        // =============================================
+        // TRY AUTOMATIC PLAY
+        // =============================================
+
+        try {
+
+
+            await player.play();
+
+
+        }
+
+        catch (playError) {
+
+
+            console.log(
+                "Automatic playback was blocked by browser."
+            );
+
+        }
+
+
+    }
+
+
+    catch (error) {
+
+
+        console.error(
+            "TTS ERROR:",
+            error
+        );
+
+
+        status.className =
+            "status error";
+
+
+        status.textContent =
+            "❌ " +
+            error.message;
+
+
+    }
+
+
+    finally {
+
+
+        generateBtn.disabled = false;
+
+
+    }
+
+}
+
+
+
+// =====================================================
+// DOWNLOAD MP3
+// =====================================================
+
+function downloadAudio() {
+
+
+    if (!audioBlob) {
+
+
+        alert(
+            "Please generate speech first."
+        );
+
+
+        return;
+
+    }
+
+
+
+    const url =
+        URL.createObjectURL(
+            audioBlob
+        );
+
+
+
+    const link =
+        document.createElement("a");
+
+
+
+    link.href =
+        url;
+
+
+
+    link.download =
+        "mongolian-speech.mp3";
+
+
+
+    document
+        .body
+        .appendChild(link);
+
+
+
+    link.click();
+
+
+
+    document
+        .body
+        .removeChild(link);
+
+
+
+    setTimeout(
+
+        function () {
+
+
+            URL.revokeObjectURL(
+                url
+            );
+
+
+        },
+
+        1000
+
+    );
+
+}
+
+
+
+// =====================================================
+// STOP AUDIO
+// =====================================================
+
+function stopAudio() {
+
+
+    const player =
+        document
+            .getElementById(
+                "audioPlayer"
+            );
+
+
+    player.pause();
+
+
+    player.currentTime = 0;
+
+
+}
+
+</script>
+
+
+</body>
+
+</html>
